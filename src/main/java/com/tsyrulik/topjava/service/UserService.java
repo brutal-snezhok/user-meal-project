@@ -2,19 +2,20 @@ package com.tsyrulik.topjava.service;
 
 import com.tsyrulik.topjava.model.User;
 import com.tsyrulik.topjava.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static com.tsyrulik.topjava.util.ValidationUtil.checkNotFound;
 import static com.tsyrulik.topjava.util.ValidationUtil.checkNotFoundWithId;
 
-@Service
+//@Service
 public class UserService {
 
-    @Autowired
-    private UserRepository repository;
+    private final UserRepository repository;
+
+    public UserService(UserRepository repository) {
+        this.repository = repository;
+    }
 
     public User create(User user) {
         return repository.save(user);
