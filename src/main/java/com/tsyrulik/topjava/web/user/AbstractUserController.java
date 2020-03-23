@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.tsyrulik.topjava.model.User;
 import com.tsyrulik.topjava.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import static com.tsyrulik.topjava.util.ValidationUtil.checkNew;
 public abstract class AbstractUserController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
+    @Autowired
     private UserService service;
 
     public List<User> getAll() {

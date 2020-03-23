@@ -2,12 +2,14 @@ package com.tsyrulik.topjava.repository.inmemory;
 
 import com.tsyrulik.topjava.model.User;
 import com.tsyrulik.topjava.repository.UserRepository;
+import org.springframework.stereotype.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
 
+@Repository
 public class InMemoryUserRepository implements UserRepository {
     private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepository.class);
 
