@@ -1,6 +1,7 @@
-package com.tsyrulik.topjava.repository;
+package com.tsyrulik.topjava.repository.inmemory;
 
 import com.tsyrulik.topjava.model.Meal;
+import com.tsyrulik.topjava.repository.MealRepository;
 import com.tsyrulik.topjava.util.MealsUtil;
 
 import java.util.Collection;

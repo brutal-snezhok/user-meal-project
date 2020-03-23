@@ -1,8 +1,8 @@
 package com.tsyrulik.topjava.web;
 
 import com.tsyrulik.topjava.model.Meal;
-import com.tsyrulik.topjava.repository.InMemoryMealRepository;
 import com.tsyrulik.topjava.repository.MealRepository;
+import com.tsyrulik.topjava.repository.inmemory.InMemoryMealRepository;
 import com.tsyrulik.topjava.util.MealsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
