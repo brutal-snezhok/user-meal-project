@@ -1,4 +1,4 @@
-package com.tsyrulik.topjava.model;
+package com.tsyrulik.topjava.dto;
 
 import java.time.LocalDateTime;
 

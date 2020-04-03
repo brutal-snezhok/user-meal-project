@@ -34,7 +34,7 @@
         </tr>
         </thead>
         <c:forEach items="${meals}" var="meal">
-            <jsp:useBean id="meal" type="com.tsyrulik.topjava.model.MealTo"/>
+            <jsp:useBean id="meal" type="com.tsyrulik.topjava.dto.MealTo"/>
             <tr class="${meal.excess ? 'excess' : 'normal'}">
                 <td>
                         <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
