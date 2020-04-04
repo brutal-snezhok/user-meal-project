@@ -1,7 +1,7 @@
 package com.tsyrulik.topjava.util;
 
 import com.tsyrulik.topjava.model.Meal;
-import com.tsyrulik.topjava.model.MealTo;
+import com.tsyrulik.topjava.to.MealTo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
