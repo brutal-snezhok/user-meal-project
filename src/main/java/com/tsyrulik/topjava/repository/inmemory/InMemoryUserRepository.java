@@ -8,11 +8,16 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.tsyrulik.topjava.UserTestData.*;
+
 @Repository
 public class InMemoryUserRepository extends InMemoryBaseRepository<User> implements UserRepository {
 
-    static final int USER_ID = 1;
-    static final int ADMIN_ID = 2;
+    public void init() {
+        map.clear();
+        map.put(USER_ID, USER);
+        map.put(ADMIN_ID, ADMIN);
+    }
 
     @Override
     public List<User> getAll() {
