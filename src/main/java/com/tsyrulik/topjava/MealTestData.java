@@ -8,7 +8,6 @@ import java.util.List;
 
 import static com.tsyrulik.topjava.model.AbstractBaseEntity.START_SEQ;
 import static java.time.LocalDateTime.of;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class MealTestData {
     public static final int MEAL1_ID = START_SEQ + 2;
@@ -34,15 +33,5 @@ public class MealTestData {
         return new Meal(MEAL1_ID, MEAL1.getDateTime(), "Обновленный завтрак", 200);
     }
 
-    public static void assertMatch(Meal actual, Meal expected) {
-        assertThat(actual).isEqualToComparingFieldByField(expected);
-    }
-
-    public static void assertMatch(Iterable<Meal> actual, Meal... expected) {
-        assertMatch(actual, Arrays.asList(expected));
-    }
-
-    public static void assertMatch(Iterable<Meal> actual, Iterable<Meal> expected) {
-        assertThat(actual).usingFieldByFieldElementComparator().isEqualTo(expected);
-    }
+    public static TestMatcher<Meal> MEAL_MATCHER = TestMatcher.of();
 }
