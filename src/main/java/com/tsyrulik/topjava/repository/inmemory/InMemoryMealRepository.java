@@ -1,8 +1,9 @@
 package com.tsyrulik.topjava.repository.inmemory;
 
+import com.tsyrulik.topjava.MealTestData;
+import com.tsyrulik.topjava.UserTestData;
 import com.tsyrulik.topjava.model.Meal;
 import com.tsyrulik.topjava.repository.MealRepository;
-import com.tsyrulik.topjava.util.MealsUtil;
 import com.tsyrulik.topjava.util.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -19,9 +19,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import static com.tsyrulik.topjava.UserTestData.ADMIN_ID;
-import static com.tsyrulik.topjava.UserTestData.USER_ID;
 
 @Repository("inMemoryMealRep")
 public class InMemoryMealRepository implements MealRepository {
@@ -31,9 +28,9 @@ public class InMemoryMealRepository implements MealRepository {
     private Map<Integer, InMemoryBaseRepository<Meal>> usersMealsMap = new ConcurrentHashMap<>();
 
     {
-        MealsUtil.MEALS.forEach(meal -> save(meal, USER_ID));
-        save(new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 14, 0), "Админ ланч", 510), ADMIN_ID);
-        save(new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 21, 0), "Админ ужин", 1500), ADMIN_ID);
+        InMemoryBaseRepository<Meal> userMeals = new InMemoryBaseRepository<>();
+        MealTestData.MEALS.forEach(meal -> userMeals.map.put(meal.getId(), meal));
+        usersMealsMap.put(UserTestData.USER_ID, userMeals);
     }
 
 
