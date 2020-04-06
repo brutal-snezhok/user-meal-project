@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 import static com.tsyrulik.topjava.UserTestData.ADMIN_ID;
 import static com.tsyrulik.topjava.UserTestData.USER_ID;
 
-@Repository
+@Repository("inMemoryMealRep")
 public class InMemoryMealRepository implements MealRepository {
     private static final Logger log = LoggerFactory.getLogger(InMemoryMealRepository.class);
 

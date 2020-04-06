@@ -12,7 +12,6 @@ import static com.tsyrulik.topjava.util.DateTimeUtil.getEndExclusive;
 import static com.tsyrulik.topjava.util.DateTimeUtil.getStartInclusive;
 import static com.tsyrulik.topjava.util.ValidationUtil.checkNotFoundWithId;
 
-
 @Service
 public class MealService {
 

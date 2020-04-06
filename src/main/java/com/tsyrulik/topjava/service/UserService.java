@@ -2,13 +2,14 @@ package com.tsyrulik.topjava.service;
 
 import com.tsyrulik.topjava.model.User;
 import com.tsyrulik.topjava.repository.UserRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static com.tsyrulik.topjava.util.ValidationUtil.checkNotFound;
 import static com.tsyrulik.topjava.util.ValidationUtil.checkNotFoundWithId;
 
-//@Service
+@Service
 public class UserService {
 
     private final UserRepository repository;

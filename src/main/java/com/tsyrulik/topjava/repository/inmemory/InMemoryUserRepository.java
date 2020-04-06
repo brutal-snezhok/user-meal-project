@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 import static com.tsyrulik.topjava.UserTestData.*;
 
-@Repository
+@Repository("inMemoryUserRep")
 public class InMemoryUserRepository extends InMemoryBaseRepository<User> implements UserRepository {
 
     public void init() {

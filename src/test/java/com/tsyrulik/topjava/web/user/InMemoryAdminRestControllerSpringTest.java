@@ -6,9 +6,11 @@ import com.tsyrulik.topjava.repository.inmemory.InMemoryUserRepository;
 import com.tsyrulik.topjava.util.exception.NotFoundException;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -18,12 +20,14 @@ import static com.tsyrulik.topjava.UserTestData.ADMIN;
 
 @ContextConfiguration("classpath:spring/spring-app.xml")
 @RunWith(SpringRunner.class)
+@Ignore
 public class InMemoryAdminRestControllerSpringTest {
 
     @Autowired
     private AdminRestController controller;
 
     @Autowired
+    @Qualifier("inMemoryUserRep")
     private InMemoryUserRepository repository;
 
     @Before

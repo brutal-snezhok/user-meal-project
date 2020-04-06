@@ -1,5 +1,6 @@
 package com.tsyrulik.topjava.web.user;
 
+import com.tsyrulik.topjava.UserTestData;
 import com.tsyrulik.topjava.model.User;
 import com.tsyrulik.topjava.repository.inmemory.InMemoryUserRepository;
 import com.tsyrulik.topjava.util.exception.NotFoundException;
@@ -8,13 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import com.tsyrulik.topjava.UserTestData;
 
 import java.util.Arrays;
 import java.util.Collection;
 
 import static com.tsyrulik.topjava.UserTestData.ADMIN;
 
+@Ignore
 public class InMemoryAdminRestControllerTest {
     private static final Logger log = LoggerFactory.getLogger(InMemoryAdminRestControllerTest.class);
 
