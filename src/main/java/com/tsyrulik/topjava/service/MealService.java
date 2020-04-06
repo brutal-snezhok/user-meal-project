@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.tsyrulik.topjava.util.DateTimeUtil.getEndExclusive;
-import static com.tsyrulik.topjava.util.DateTimeUtil.getStartInclusive;
+import static com.tsyrulik.topjava.util.DateTimeUtil.*;
 import static com.tsyrulik.topjava.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -29,8 +28,8 @@ public class MealService {
         checkNotFoundWithId(repository.delete(id, userId), id);
     }
 
-    public List<Meal> getBetweenHalfOpen(@Nullable LocalDate startDate, @Nullable LocalDate endDate, int userId) {
-        return repository.getBetweenHalfOpen(getStartInclusive(startDate), getEndExclusive(endDate), userId);
+    public List<Meal> getBetweenInclusive(@Nullable LocalDate startDate, @Nullable LocalDate endDate, int userId) {
+        return repository.getBetweenHalfOpen(atStartOfDayOrMin(startDate), atStartOfNextDayOrMax(endDate), userId);
     }
 
     public List<Meal> getAll(int userId) {
