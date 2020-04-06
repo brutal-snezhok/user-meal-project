@@ -3,11 +3,18 @@ package com.tsyrulik.topjava.model;
 import java.time.LocalDateTime;
 
 public class Meal extends AbstractBaseEntity {
-    private final LocalDateTime dateTime;
+    private LocalDateTime dateTime;
 
-    private final String description;
+    private String description;
 
-    private final int calories;
+    private int calories;
+
+    public Meal() {
+    }
+
+    public Meal(Meal m) {
+        this(m.getId(), m.getDateTime(), m.getDescription(), m.getCalories());
+    }
 
     public Meal(LocalDateTime dateTime, String description, int calories) {
         this(null, dateTime, description, calories);
