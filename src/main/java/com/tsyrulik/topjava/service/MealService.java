@@ -4,11 +4,13 @@ import com.tsyrulik.topjava.model.Meal;
 import com.tsyrulik.topjava.repository.MealRepository;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.tsyrulik.topjava.util.DateTimeUtil.*;
+import static com.tsyrulik.topjava.util.DateTimeUtil.atStartOfDayOrMin;
+import static com.tsyrulik.topjava.util.DateTimeUtil.atStartOfNextDayOrMax;
 import static com.tsyrulik.topjava.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -37,10 +39,12 @@ public class MealService {
     }
 
     public void update(Meal meal, int userId) {
+        Assert.notNull(meal, "meal must not be null");
         checkNotFoundWithId(repository.save(meal, userId), meal.getId());
     }
 
     public Meal create(Meal meal, int userId) {
+        Assert.notNull(meal, "meal must not be null");
         return repository.save(meal, userId);
     }
 }
