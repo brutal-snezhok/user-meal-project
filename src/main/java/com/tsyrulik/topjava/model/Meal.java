@@ -1,17 +1,37 @@
 package com.tsyrulik.topjava.model;
 
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
+@NamedQueries({
+        @NamedQuery(name = Meal.DELETE_MEAL, query = "DELETE FROM Meal m WHERE m.id=:id"),
+        @NamedQuery(name = Meal.ALL_MEAL, query = "SELECT m FROM Meal m LEFT JOIN FETCH m.user")
+})
+@Entity
+@Table(name = "meals")
 public class Meal extends AbstractBaseEntity {
+
+    public static final String DELETE_MEAL = "Meal.delete";
+    public static final String ALL_MEAL = "Meal.getAllSorted";
+
+    @Column(name = "date_time", nullable = false)
+    @NotNull
     private LocalDateTime dateTime;
 
+    @Column(name = "description", nullable = false)
+    @NotBlank
+    @Size(max = 200)
     private String description;
 
+    @Column(name = "calories", nullable = false)
+    @NotNull
     private int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Meal() {
