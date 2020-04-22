@@ -4,7 +4,6 @@ import com.tsyrulik.topjava.model.Meal;
 import com.tsyrulik.topjava.repository.MealRepository;
 import com.tsyrulik.topjava.util.exception.NotFoundException;
 import org.junit.*;
-import org.junit.rules.ExpectedException;
 import org.junit.rules.Stopwatch;
 import org.junit.runner.Description;
 import org.junit.runner.RunWith;
@@ -35,9 +34,6 @@ public class MealServiceTest {
     private static final Logger log = getLogger(MealServiceTest.class);
 
     private static StringBuilder results = new StringBuilder();
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Rule
     // http://stackoverflow.com/questions/14892125/what-is-the-best-practice-to-determine-the-execution-time-of-the-bussiness-relev
@@ -72,14 +68,14 @@ public class MealServiceTest {
 
     @Test
     public void deleteNotFound() throws Exception {
-        thrown.expect(NotFoundException.class);
-        service.delete(1, USER_ID);
+        Assert.assertThrows(NotFoundException.class,
+                () -> service.delete(1, USER_ID));
     }
 
     @Test
     public void deleteNotOwn() throws Exception {
-        thrown.expect(NotFoundException.class);
-        service.delete(MEAL1_ID, ADMIN_ID);
+        Assert.assertThrows(NotFoundException.class,
+                () -> service.delete(MEAL1_ID, ADMIN_ID));
     }
 
     @Test
@@ -100,14 +96,14 @@ public class MealServiceTest {
 
     @Test
     public void getNotFound() throws Exception {
-        thrown.expect(NotFoundException.class);
-        service.get(MEAL1_ID, ADMIN_ID);
+        Assert.assertThrows(NotFoundException.class,
+                () -> service.get(MEAL1_ID, ADMIN_ID));
     }
 
     @Test
     public void getNotOwn() throws Exception {
-        thrown.expect(NotFoundException.class);
-        service.get(MEAL1_ID, ADMIN_ID);
+        Assert.assertThrows(NotFoundException.class,
+                () -> service.get(MEAL1_ID, ADMIN_ID));
     }
 
     @Test
@@ -119,9 +115,9 @@ public class MealServiceTest {
 
     @Test
     public void updateNotFound() throws Exception {
-        thrown.expect(NotFoundException.class);
-        thrown.expectMessage("Not found entity with id=" + MEAL1_ID);
-        service.update(MEAL1, ADMIN_ID);
+        NotFoundException ex = Assert.assertThrows(NotFoundException.class,
+                () -> service.update(MEAL1, ADMIN_ID));
+        Assert.assertEquals("Not found entity with id=" + MEAL1_ID, ex.getMessage());
     }
 
     @Test
