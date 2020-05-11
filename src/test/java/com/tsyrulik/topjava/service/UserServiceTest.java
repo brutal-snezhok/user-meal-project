@@ -1,6 +1,6 @@
 package com.tsyrulik.topjava.service;
 
-import com.tsyrulik.topjava.Profiles;
+import com.tsyrulik.topjava.ActiveDbProfileResolver;
 import com.tsyrulik.topjava.model.Role;
 import com.tsyrulik.topjava.model.User;
 import com.tsyrulik.topjava.repository.UserRepository;
@@ -26,7 +26,7 @@ import static com.tsyrulik.topjava.UserTestData.*;
 })
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ActiveProfiles(Profiles.ACTIVE_DB)
+@ActiveProfiles(resolver = ActiveDbProfileResolver.class)
 public class UserServiceTest {
 
     @Autowired

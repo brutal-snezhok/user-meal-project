@@ -1,6 +1,6 @@
 package com.tsyrulik.topjava.service;
 
-import com.tsyrulik.topjava.Profiles;
+import com.tsyrulik.topjava.ActiveDbProfileResolver;
 import com.tsyrulik.topjava.model.Meal;
 import com.tsyrulik.topjava.repository.MealRepository;
 import com.tsyrulik.topjava.util.exception.NotFoundException;
@@ -31,7 +31,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 })
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ActiveProfiles(Profiles.ACTIVE_DB)
+@ActiveProfiles(resolver = ActiveDbProfileResolver.class)
 @Ignore
 public class MealServiceTest {
     private static final Logger log = getLogger("result");
