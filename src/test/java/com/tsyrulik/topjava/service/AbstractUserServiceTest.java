@@ -2,6 +2,7 @@ package com.tsyrulik.topjava.service;
 
 import com.tsyrulik.topjava.model.Role;
 import com.tsyrulik.topjava.model.User;
+import com.tsyrulik.topjava.repository.JpaUtil;
 import com.tsyrulik.topjava.repository.UserRepository;
 import com.tsyrulik.topjava.util.exception.NotFoundException;
 import org.junit.Assert;
@@ -30,9 +31,13 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     @Autowired
     private CacheManager cacheManager;
 
+    @Autowired
+    protected JpaUtil jpaUtil;
+
     @Before
     public void setUp() throws Exception {
         cacheManager.getCache("users").clear();
+        jpaUtil.clear2ndLevelHibernateCache();
     }
 
     @Test
