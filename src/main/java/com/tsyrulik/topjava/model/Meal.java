@@ -2,6 +2,8 @@ package com.tsyrulik.topjava.model;
 
 import com.sun.istack.NotNull;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -38,6 +40,7 @@ public class Meal extends AbstractBaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private User user;
 
