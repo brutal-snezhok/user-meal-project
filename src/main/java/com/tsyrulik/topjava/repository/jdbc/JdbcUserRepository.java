@@ -3,6 +3,7 @@ package com.tsyrulik.topjava.repository.jdbc;
 import com.tsyrulik.topjava.model.Role;
 import com.tsyrulik.topjava.model.User;
 import com.tsyrulik.topjava.repository.UserRepository;
+import com.tsyrulik.topjava.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -41,6 +42,8 @@ public class JdbcUserRepository implements UserRepository {
     @Override
     @Transactional
     public User save(User user) {
+        ValidationUtil.validate(user);
+
         BeanPropertySqlParameterSource parameterSource = new BeanPropertySqlParameterSource(user);
 
         if (user.isNew()) {

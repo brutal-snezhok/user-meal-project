@@ -4,7 +4,6 @@ import com.tsyrulik.topjava.model.Meal;
 import com.tsyrulik.topjava.repository.MealRepository;
 import com.tsyrulik.topjava.util.exception.NotFoundException;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -105,7 +104,6 @@ public abstract class AbstractMealServiceTest extends AbstractServiceTest {
 
     @Test
     public void createWithException() throws Exception {
-        Assume.assumeTrue("Validation not supported (JPA only)", isJpaBased());
         validateRootCause(() -> service.create(new Meal(null, of(2015, Month.JUNE, 1, 18, 0), "  ", 300), USER_ID), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new Meal(null, null, "Description", 300), USER_ID), org.postgresql.util.PSQLException.class);
         validateRootCause(() -> service.create(new Meal(null, of(2015, Month.JUNE, 1, 18, 0), "Description", 9), USER_ID), ConstraintViolationException.class);

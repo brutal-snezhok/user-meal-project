@@ -2,6 +2,7 @@ package com.tsyrulik.topjava.repository.jdbc;
 
 import com.tsyrulik.topjava.model.Meal;
 import com.tsyrulik.topjava.repository.MealRepository;
+import com.tsyrulik.topjava.util.ValidationUtil;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -39,6 +40,8 @@ public class JdbcMealRepository implements MealRepository {
     @Override
     @Transactional
     public Meal save(Meal meal, int userId) {
+        ValidationUtil.validate(meal);
+
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", meal.getId())
                 .addValue("description", meal.getDescription())
