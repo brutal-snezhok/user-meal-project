@@ -1,7 +1,5 @@
 package com.tsyrulik.topjava.web.user;
 
-import com.tsyrulik.topjava.UserTestData;
-import com.tsyrulik.topjava.model.User;
 import com.tsyrulik.topjava.repository.inmemory.InMemoryUserRepository;
 import com.tsyrulik.topjava.util.exception.NotFoundException;
 import org.junit.Assert;
@@ -12,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Collection;
-
-import static com.tsyrulik.topjava.UserTestData.ADMIN;
+import static com.tsyrulik.topjava.UserTestData.USER_ID;
 
 @ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/inmemory.xml"})
 @RunWith(SpringRunner.class)
@@ -33,14 +29,12 @@ public class InMemoryAdminRestControllerSpringTest {
 
     @Test
     public void delete() throws Exception {
-        controller.delete(UserTestData.USER_ID);
-        Collection<User> users = controller.getAll();
-        Assert.assertEquals(1, users.size());
-        Assert.assertEquals(ADMIN, users.iterator().next());
+        controller.delete(USER_ID);
+        Assert.assertNull(repository.get(USER_ID));
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void deleteNotFound() throws Exception {
-        controller.delete(10);
+        Assert.assertThrows(NotFoundException.class, () -> controller.delete(10));
     }
 }
