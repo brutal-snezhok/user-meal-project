@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static com.tsyrulik.topjava.UserTestData.USER_ID;
 
-@ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/inmemory.xml"})
+@ContextConfiguration({"classpath:spring/inmemory.xml"})
 @RunWith(SpringRunner.class)
 public class InMemoryAdminRestControllerSpringTest {
 
