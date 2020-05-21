@@ -1,6 +1,6 @@
 package com.tsyrulik.topjava.web;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static com.tsyrulik.topjava.UserTestData.USER;
 import static com.tsyrulik.topjava.model.AbstractBaseEntity.START_SEQ;
@@ -10,10 +10,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-public class RootControllerTest extends AbstractControllerTest {
+class RootControllerTest extends AbstractControllerTest {
 
     @Test
-    public void getUsers() throws Exception {
+    void getUsers() throws Exception {
         mockMvc.perform(get("/users"))
                 .andDo(print())
                 .andExpect(status().isOk())
