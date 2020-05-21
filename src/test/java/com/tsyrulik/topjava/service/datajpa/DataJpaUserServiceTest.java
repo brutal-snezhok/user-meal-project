@@ -5,7 +5,6 @@ import com.tsyrulik.topjava.model.User;
 import com.tsyrulik.topjava.service.AbstractUserServiceTest;
 import com.tsyrulik.topjava.util.exception.NotFoundException;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -13,7 +12,6 @@ import static com.tsyrulik.topjava.Profiles.DATAJPA;
 import static com.tsyrulik.topjava.UserTestData.*;
 
 @ActiveProfiles(DATAJPA)
-@Disabled
 class DataJpaUserServiceTest extends AbstractUserServiceTest {
 
     @Test

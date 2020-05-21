@@ -51,7 +51,9 @@
               p:driverClassName="org.postgresql.Driver"
               p:url="${database.url}"
               p:username="${database.username}"
-              p:password="${database.password}"/>
+              p:password="${database.password}"
+              p:maxActive="4"
+              p:maxIdle="4"/>
     </beans>
 
     <beans profile="tomcat">
