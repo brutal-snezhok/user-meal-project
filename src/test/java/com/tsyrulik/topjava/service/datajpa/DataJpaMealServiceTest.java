@@ -5,6 +5,7 @@ import com.tsyrulik.topjava.model.Meal;
 import com.tsyrulik.topjava.service.AbstractMealServiceTest;
 import com.tsyrulik.topjava.util.exception.NotFoundException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -13,6 +14,7 @@ import static com.tsyrulik.topjava.Profiles.DATAJPA;
 import static com.tsyrulik.topjava.UserTestData.ADMIN_ID;
 
 @ActiveProfiles(DATAJPA)
+@Disabled
 class DataJpaMealServiceTest extends AbstractMealServiceTest {
 
     @Test
