@@ -87,7 +87,7 @@ class MealRestControllerTest extends AbstractControllerTest {
                 .param("endDate", "2020-01-31").param("endTime", "11:00"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(MEAL_TO_MATCHER.contentJson(createTo(MEAL5, true), createTo(MEAL1, false)));
+                .andExpect(MEAL_TO_MATCHER.contentJson(createTo(MEAL5, false), createTo(MEAL1, true)));
     }
 
     @Test
