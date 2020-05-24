@@ -1,7 +1,7 @@
 package com.tsyrulik.topjava.web.user;
 
-import com.tsyrulik.topjava.model.Role;
 import com.tsyrulik.topjava.model.User;
+import com.tsyrulik.topjava.to.UserTo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -27,14 +27,9 @@ public class AdminUIController extends AbstractUserController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void createOrUpdate(@RequestParam Integer id,
-                               @RequestParam String name,
-                               @RequestParam String email,
-                               @RequestParam String password) {
-
-        User user = new User(id, name, email, password, Role.ROLE_USER);
-        if (user.isNew()) {
-            super.create(user);
+    public void createOrUpdate(UserTo userTo) {
+        if (userTo.isNew()) {
+            super.create(userTo);
         }
     }
 

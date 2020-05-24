@@ -1,10 +1,12 @@
 package com.tsyrulik.topjava.web.user;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.tsyrulik.topjava.model.User;
 import com.tsyrulik.topjava.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.tsyrulik.topjava.to.UserTo;
+import com.tsyrulik.topjava.util.UserUtil;
 
 import java.util.List;
 
@@ -25,6 +27,11 @@ public abstract class AbstractUserController {
     public User get(int id) {
         log.info("get {}", id);
         return service.get(id);
+    }
+
+    public User create(UserTo userTo) {
+        log.info("create from to {}", userTo);
+        return create(UserUtil.createNewFromTo(userTo));
     }
 
     public User create(User user) {
