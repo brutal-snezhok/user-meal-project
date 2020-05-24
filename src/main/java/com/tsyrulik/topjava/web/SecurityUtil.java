@@ -2,7 +2,7 @@ package com.tsyrulik.topjava.web;
 
 import com.tsyrulik.topjava.model.AbstractBaseEntity;
 
-import static com.tsyrulik.topjava.util.MealsUtil.DEFAULT_CALORIES_PER_DAY;
+import static com.tsyrulik.topjava.util.UserUtil.DEFAULT_CALORIES_PER_DAY;
 
 public class SecurityUtil {
 

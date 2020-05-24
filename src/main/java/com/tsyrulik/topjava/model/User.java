@@ -15,7 +15,6 @@ import java.util.*;
 
 import static com.tsyrulik.topjava.util.UserUtil.DEFAULT_CALORIES_PER_DAY;
 
-
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @NamedQueries({
         @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=:id"),
