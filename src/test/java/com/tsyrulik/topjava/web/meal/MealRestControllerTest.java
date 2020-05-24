@@ -6,6 +6,7 @@ import com.tsyrulik.topjava.service.MealService;
 import com.tsyrulik.topjava.util.exception.NotFoundException;
 import com.tsyrulik.topjava.web.AbstractControllerTest;
 import com.tsyrulik.topjava.web.json.JsonUtil;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -24,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Disabled
 class MealRestControllerTest extends AbstractControllerTest {
 
     private static final String REST_URL = MealRestController.REST_URL + '/';
