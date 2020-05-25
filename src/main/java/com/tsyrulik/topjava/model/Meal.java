@@ -1,14 +1,15 @@
 package com.tsyrulik.topjava.model;
 
-import com.sun.istack.NotNull;
+import com.tsyrulik.topjava.View;
+import com.tsyrulik.topjava.util.DateTimeUtil;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
-import com.tsyrulik.topjava.util.DateTimeUtil;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
@@ -45,7 +46,7 @@ public class Meal extends AbstractBaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-//    @NotNull
+    @NotNull(groups = View.Persist.class)
     private User user;
 
     public Meal() {
