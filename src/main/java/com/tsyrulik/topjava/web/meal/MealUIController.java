@@ -1,5 +1,7 @@
 package com.tsyrulik.topjava.web.meal;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.tsyrulik.topjava.View;
 import com.tsyrulik.topjava.model.Meal;
 import com.tsyrulik.topjava.to.MealTo;
 import com.tsyrulik.topjava.util.ValidationUtil;
@@ -21,12 +23,14 @@ public class MealUIController extends AbstractMealController {
 
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @JsonView(View.JsonUI.class)
     public List<MealTo> getAll() {
         return super.getAll();
     }
 
     @Override
     @GetMapping(value = "/{id}")
+    @JsonView(View.JsonUI.class)
     public Meal get(@PathVariable int id) {
         return super.get(id);
     }
@@ -53,6 +57,7 @@ public class MealUIController extends AbstractMealController {
 
     @Override
     @GetMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
+    @JsonView(View.JsonUI.class)
     public List<MealTo> getBetween(
             @RequestParam @Nullable LocalDate startDate,
             @RequestParam @Nullable LocalTime startTime,
