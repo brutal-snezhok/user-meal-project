@@ -4,6 +4,7 @@ import com.tsyrulik.topjava.model.User;
 import com.tsyrulik.topjava.service.UserService;
 import com.tsyrulik.topjava.to.UserTo;
 import com.tsyrulik.topjava.util.UserUtil;
+import com.tsyrulik.topjava.util.exception.ErrorType;
 import com.tsyrulik.topjava.web.AbstractControllerTest;
 import com.tsyrulik.topjava.web.json.JsonUtil;
 import org.junit.jupiter.api.Test;
@@ -17,8 +18,7 @@ import static com.tsyrulik.topjava.TestUtil.userHttpBasic;
 import static com.tsyrulik.topjava.UserTestData.*;
 import static com.tsyrulik.topjava.web.user.ProfileRestController.REST_URL;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class ProfileRestControllerTest extends AbstractControllerTest {
 
@@ -75,5 +75,18 @@ class ProfileRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent());
 
         USER_MATCHER.assertMatch(userService.get(USER_ID), UserUtil.updateFromTo(new User(USER), updatedTo));
+    }
+
+    @Test
+    void updateInvalid() throws Exception {
+        UserTo updatedTo = new UserTo(null, null, "password", null, 1500);
+        perform(MockMvcRequestBuilders.put(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(USER))
+                .content(JsonUtil.writeValue(updatedTo)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.type").value(ErrorType.VALIDATION_ERROR.name()))
+                .andDo(print());
     }
 }

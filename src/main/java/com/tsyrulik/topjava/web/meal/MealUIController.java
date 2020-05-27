@@ -2,12 +2,9 @@ package com.tsyrulik.topjava.web.meal;
 
 import com.tsyrulik.topjava.model.Meal;
 import com.tsyrulik.topjava.to.MealTo;
-import com.tsyrulik.topjava.util.ValidationUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -39,17 +36,12 @@ public class MealUIController extends AbstractMealController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createOrUpdate(@Valid Meal meal, BindingResult result) {
-        if (result.hasErrors()) {
-            // TODO change to exception handler
-            return ValidationUtil.getErrorResponse(result);
-        }
+    public void createOrUpdate(@Valid Meal meal) {
         if (meal.isNew()) {
             super.create(meal);
         } else {
             super.update(meal, meal.getId());
         }
-        return ResponseEntity.ok().build();
     }
 
     @Override

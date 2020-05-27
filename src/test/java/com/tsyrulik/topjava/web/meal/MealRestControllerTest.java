@@ -4,6 +4,7 @@ package com.tsyrulik.topjava.web.meal;
 import com.tsyrulik.topjava.MealTestData;
 import com.tsyrulik.topjava.model.Meal;
 import com.tsyrulik.topjava.service.MealService;
+import com.tsyrulik.topjava.util.exception.ErrorType;
 import com.tsyrulik.topjava.util.exception.NotFoundExceptionCustom;
 import com.tsyrulik.topjava.web.AbstractControllerTest;
 import com.tsyrulik.topjava.web.json.JsonUtil;
@@ -16,15 +17,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static com.tsyrulik.topjava.MealTestData.*;
 import static com.tsyrulik.topjava.TestUtil.readFromJson;
 import static com.tsyrulik.topjava.TestUtil.userHttpBasic;
-import static com.tsyrulik.topjava.UserTestData.USER;
-import static com.tsyrulik.topjava.UserTestData.USER_ID;
+import static com.tsyrulik.topjava.UserTestData.*;
 import static com.tsyrulik.topjava.model.AbstractBaseEntity.START_SEQ;
 import static com.tsyrulik.topjava.util.MealsUtil.createTo;
 import static com.tsyrulik.topjava.util.MealsUtil.getTos;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class MealRestControllerTest extends AbstractControllerTest {
 
@@ -125,5 +124,31 @@ class MealRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andExpect(MEAL_TO_MATCHER.contentJson(getTos(MEALS, USER.getCaloriesPerDay())));
+    }
+
+    @Test
+    void createInvalid() throws Exception {
+        Meal invalid = new Meal(null, null, "Dummy", 200);
+        perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(invalid))
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.type").value(ErrorType.VALIDATION_ERROR.name()))
+                .andDo(print());
+    }
+
+    @Test
+    void updateInvalid() throws Exception {
+        Meal invalid = new Meal(MEAL1_ID, null, null, 6000);
+        perform(MockMvcRequestBuilders.put(REST_URL + MEAL1_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(invalid))
+                .with(userHttpBasic(USER)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.type").value(ErrorType.VALIDATION_ERROR.name()))
+                .andDo(print());
     }
 }
