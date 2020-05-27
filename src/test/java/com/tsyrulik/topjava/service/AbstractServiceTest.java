@@ -13,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringJUnitConfig(locations = {
         "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-db.xml"
+        "classpath:spring/spring-db.xml",
+        "classpath:spring/spring-mvc.xml"
 })
 //@ExtendWith(SpringExtension.class)
 @ActiveProfiles(resolver = ActiveDbProfileResolver.class)
