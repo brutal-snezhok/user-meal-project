@@ -1,9 +1,12 @@
 package com.tsyrulik.topjava.util;
 
+import org.slf4j.Logger;
 import com.tsyrulik.topjava.HasId;
+import com.tsyrulik.topjava.util.exception.ErrorType;
 import com.tsyrulik.topjava.util.exception.IllegalRequestDataException;
 import com.tsyrulik.topjava.util.exception.NotFoundExceptionCustom;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.*;
 import java.util.Set;
 
@@ -56,6 +59,20 @@ public class ValidationUtil {
             result = cause;
         }
         return result;
+    }
+
+    public static String getMessage(Throwable e) {
+        return e.getLocalizedMessage() != null ? e.getLocalizedMessage() : e.getClass().getName();
+    }
+
+    public static Throwable logAndGetRootCause(Logger log, HttpServletRequest req, Exception e, boolean logException, ErrorType errorType) {
+        Throwable rootCause = ValidationUtil.getRootCause(e);
+        if (logException) {
+            log.error(errorType + " at request " + req.getRequestURL(), rootCause);
+        } else {
+            log.warn("{} at request  {}: {}", errorType, req.getRequestURL(), rootCause.toString());
+        }
+        return rootCause;
     }
 
     private static final Validator validator;
