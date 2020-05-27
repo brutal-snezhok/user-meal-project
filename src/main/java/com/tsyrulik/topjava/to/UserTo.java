@@ -4,6 +4,7 @@ import com.tsyrulik.topjava.util.UserUtil;
 import org.hibernate.validator.constraints.Range;
 import com.tsyrulik.topjava.HasIdAndEmail;
 
+import org.hibernate.validator.constraints.SafeHtml;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,11 +16,13 @@ public class UserTo extends BaseTo implements HasIdAndEmail, Serializable {
 
     @NotBlank
     @Size(min = 2, max = 100)
+    @SafeHtml
     private String name;
 
     @Email
     @NotBlank
     @Size(max = 100)
+    @SafeHtml // https://stackoverflow.com/questions/17480809
     private String email;
 
     @NotBlank
