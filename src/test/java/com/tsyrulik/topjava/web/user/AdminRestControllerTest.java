@@ -4,7 +4,6 @@ import com.tsyrulik.topjava.UserTestData;
 import com.tsyrulik.topjava.model.Role;
 import com.tsyrulik.topjava.model.User;
 import com.tsyrulik.topjava.service.UserService;
-import com.tsyrulik.topjava.util.exception.ErrorType;
 import com.tsyrulik.topjava.util.exception.NotFoundExceptionCustom;
 import com.tsyrulik.topjava.web.AbstractControllerTest;
 import com.tsyrulik.topjava.web.json.JsonUtil;
@@ -13,16 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.tsyrulik.topjava.TestUtil.readFromJson;
 import static com.tsyrulik.topjava.TestUtil.userHttpBasic;
 import static com.tsyrulik.topjava.UserTestData.*;
+import static com.tsyrulik.topjava.util.exception.ErrorType.VALIDATION_ERROR;
+import static com.tsyrulik.topjava.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class AdminRestControllerTest extends AbstractControllerTest {
 
@@ -147,7 +149,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(ADMIN))
                 .content(JsonUtil.writeValue(expected)))
                 .andExpect(status().isUnprocessableEntity())
-                .andExpect(jsonPath("$.type").value(ErrorType.VALIDATION_ERROR.name()))
+                .andExpect(errorType(VALIDATION_ERROR))
                 .andDo(print());
     }
 
@@ -161,7 +163,37 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isUnprocessableEntity())
                 .andDo(print())
-                .andExpect(jsonPath("$.type").value(ErrorType.VALIDATION_ERROR.name()))
+                .andExpect(errorType(VALIDATION_ERROR))
                 .andDo(print());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void updateDuplicate() throws Exception {
+        User updated = new User(USER);
+        updated.setEmail("admin@gmail.com");
+        perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(jsonWithPassword(updated, "password")))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andExpect(detailMessage(EXCEPTION_DUPLICATE_EMAIL))
+                .andDo(print());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void createDuplicate() throws Exception {
+        User expected = new User(null, "New", "user@yandex.ru", "newPass", 2300, Role.USER, Role.ADMIN);
+        perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(jsonWithPassword(expected, "newPass")))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andExpect(detailMessage(EXCEPTION_DUPLICATE_EMAIL))
+                .andDo(print());
+
     }
 }

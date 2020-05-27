@@ -4,7 +4,6 @@ package com.tsyrulik.topjava.web.meal;
 import com.tsyrulik.topjava.MealTestData;
 import com.tsyrulik.topjava.model.Meal;
 import com.tsyrulik.topjava.service.MealService;
-import com.tsyrulik.topjava.util.exception.ErrorType;
 import com.tsyrulik.topjava.util.exception.NotFoundExceptionCustom;
 import com.tsyrulik.topjava.web.AbstractControllerTest;
 import com.tsyrulik.topjava.web.json.JsonUtil;
@@ -13,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.tsyrulik.topjava.MealTestData.*;
 import static com.tsyrulik.topjava.TestUtil.readFromJson;
@@ -21,9 +22,12 @@ import static com.tsyrulik.topjava.UserTestData.*;
 import static com.tsyrulik.topjava.model.AbstractBaseEntity.START_SEQ;
 import static com.tsyrulik.topjava.util.MealsUtil.createTo;
 import static com.tsyrulik.topjava.util.MealsUtil.getTos;
+import static com.tsyrulik.topjava.util.exception.ErrorType.VALIDATION_ERROR;
+import static com.tsyrulik.topjava.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_DATETIME;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class MealRestControllerTest extends AbstractControllerTest {
 
@@ -135,7 +139,7 @@ class MealRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity())
-                .andExpect(jsonPath("$.type").value(ErrorType.VALIDATION_ERROR.name()))
+                .andExpect(errorType(VALIDATION_ERROR))
                 .andDo(print());
     }
 
@@ -148,7 +152,36 @@ class MealRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(USER)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity())
-                .andExpect(jsonPath("$.type").value(ErrorType.VALIDATION_ERROR.name()))
+                .andExpect(errorType(VALIDATION_ERROR))
                 .andDo(print());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void updateDuplicate() throws Exception {
+        Meal invalid = new Meal(MEAL1_ID, MEAL2.getDateTime(), "Dummy", 200);
+
+        perform(MockMvcRequestBuilders.put(REST_URL + MEAL1_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(invalid))
+                .with(userHttpBasic(USER)))
+                .andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andExpect(detailMessage(EXCEPTION_DUPLICATE_DATETIME));
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void createDuplicate() throws Exception {
+        Meal invalid = new Meal(null, ADMIN_MEAL1.getDateTime(), "Dummy", 200);
+        perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(invalid))
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andExpect(detailMessage(EXCEPTION_DUPLICATE_DATETIME));
     }
 }

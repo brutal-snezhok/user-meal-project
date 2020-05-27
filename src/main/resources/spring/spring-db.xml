@@ -52,8 +52,8 @@
               p:url="${database.url}"
               p:username="${database.username}"
               p:password="${database.password}"
-              p:maxActive="3"
-              p:maxIdle="3"/>
+              p:maxActive="2"
+              p:maxIdle="2"/>
     </beans>
 
     <beans profile="tomcat">
