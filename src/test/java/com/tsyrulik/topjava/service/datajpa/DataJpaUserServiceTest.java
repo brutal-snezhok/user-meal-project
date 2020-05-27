@@ -3,7 +3,7 @@ package com.tsyrulik.topjava.service.datajpa;
 import com.tsyrulik.topjava.MealTestData;
 import com.tsyrulik.topjava.model.User;
 import com.tsyrulik.topjava.service.AbstractUserServiceTest;
-import com.tsyrulik.topjava.util.exception.NotFoundException;
+import com.tsyrulik.topjava.util.exception.NotFoundExceptionCustom;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -23,7 +23,7 @@ class DataJpaUserServiceTest extends AbstractUserServiceTest {
 
     @Test
     void getWithMealsNotFound() throws Exception {
-        Assertions.assertThrows(NotFoundException.class,
+        Assertions.assertThrows(NotFoundExceptionCustom.class,
                 () -> service.getWithMeals(1));
     }
 }

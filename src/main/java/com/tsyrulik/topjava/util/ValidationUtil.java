@@ -1,8 +1,7 @@
 package com.tsyrulik.topjava.util;
 
 import com.tsyrulik.topjava.HasId;
-import com.tsyrulik.topjava.util.exception.IllegalRequestDataException;
-import com.tsyrulik.topjava.util.exception.NotFoundException;
+import com.tsyrulik.topjava.util.exception.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 
@@ -31,7 +30,7 @@ public class ValidationUtil {
 
     public static void checkNotFound(boolean found, String msg) {
         if (!found) {
-            throw new NotFoundException("Not found entity with " + msg);
+            throw new NotFoundExceptionCustom("Not found entity with " + msg);
         }
     }
 

@@ -2,7 +2,7 @@ package com.tsyrulik.topjava.service;
 
 import com.tsyrulik.topjava.model.Meal;
 import com.tsyrulik.topjava.repository.MealRepository;
-import com.tsyrulik.topjava.util.exception.NotFoundException;
+import com.tsyrulik.topjava.util.exception.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +33,13 @@ public abstract class AbstractMealServiceTest extends AbstractServiceTest {
 
     @Test
     void deleteNotFound() throws Exception {
-        assertThrows(NotFoundException.class,
+        assertThrows(NotFoundExceptionCustom.class,
                 () -> service.delete(1, USER_ID));
     }
 
     @Test
     void deleteNotOwn() throws Exception {
-        assertThrows(NotFoundException.class,
+        assertThrows(NotFoundExceptionCustom.class,
                 () -> service.delete(MEAL1_ID, ADMIN_ID));
     }
 
@@ -61,13 +61,13 @@ public abstract class AbstractMealServiceTest extends AbstractServiceTest {
 
     @Test
     void getNotFound() throws Exception {
-        assertThrows(NotFoundException.class,
+        assertThrows(NotFoundExceptionCustom.class,
                 () -> service.get(MEAL1_ID, ADMIN_ID));
     }
 
     @Test
     void getNotOwn() throws Exception {
-        assertThrows(NotFoundException.class,
+        assertThrows(NotFoundExceptionCustom.class,
                 () -> service.get(MEAL1_ID, ADMIN_ID));
     }
 
@@ -80,7 +80,7 @@ public abstract class AbstractMealServiceTest extends AbstractServiceTest {
 
     @Test
     void updateNotFound() throws Exception {
-        NotFoundException ex = assertThrows(NotFoundException.class,
+        NotFoundExceptionCustom ex = assertThrows(NotFoundExceptionCustom.class,
                 () -> service.update(MEAL1, ADMIN_ID));
         Assertions.assertEquals("Not found entity with id=" + MEAL1_ID, ex.getMessage());
     }

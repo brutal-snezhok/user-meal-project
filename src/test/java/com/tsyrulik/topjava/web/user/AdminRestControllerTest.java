@@ -3,7 +3,7 @@ package com.tsyrulik.topjava.web.user;
 import com.tsyrulik.topjava.UserTestData;
 import com.tsyrulik.topjava.model.User;
 import com.tsyrulik.topjava.service.UserService;
-import com.tsyrulik.topjava.util.exception.NotFoundException;
+import com.tsyrulik.topjava.util.exception.NotFoundExceptionCustom;
 import com.tsyrulik.topjava.web.AbstractControllerTest;
 import com.tsyrulik.topjava.web.json.JsonUtil;
 import org.junit.jupiter.api.Test;
@@ -63,7 +63,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        assertThrows(NotFoundException.class, () -> userService.get(USER_ID));
+        assertThrows(NotFoundExceptionCustom.class, () -> userService.get(USER_ID));
     }
 
     @Test

@@ -1,7 +1,7 @@
 package com.tsyrulik.topjava.web.user;
 
 import com.tsyrulik.topjava.repository.inmemory.InMemoryUserRepository;
-import com.tsyrulik.topjava.util.exception.NotFoundException;
+import com.tsyrulik.topjava.util.exception.*;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +48,6 @@ class InMemoryAdminRestControllerTest {
 
     @Test
     void deleteNotFound() throws Exception {
-        Assertions.assertThrows(NotFoundException.class, () -> controller.delete(10));
+        Assertions.assertThrows(NotFoundExceptionCustom.class, () -> controller.delete(10));
     }
 }

@@ -4,7 +4,7 @@ package com.tsyrulik.topjava.web.meal;
 import com.tsyrulik.topjava.MealTestData;
 import com.tsyrulik.topjava.model.Meal;
 import com.tsyrulik.topjava.service.MealService;
-import com.tsyrulik.topjava.util.exception.NotFoundException;
+import com.tsyrulik.topjava.util.exception.NotFoundExceptionCustom;
 import com.tsyrulik.topjava.web.AbstractControllerTest;
 import com.tsyrulik.topjava.web.json.JsonUtil;
 import org.junit.jupiter.api.Test;
@@ -62,7 +62,7 @@ class MealRestControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.delete(REST_URL + MEAL1_ID)
                 .with(userHttpBasic(USER)))
                 .andExpect(status().isNoContent());
-        assertThrows(NotFoundException.class, () -> mealService.get(MEAL1_ID, USER_ID));
+        assertThrows(NotFoundExceptionCustom.class, () -> mealService.get(MEAL1_ID, USER_ID));
     }
 
     @Test

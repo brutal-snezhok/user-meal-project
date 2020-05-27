@@ -3,7 +3,7 @@ package com.tsyrulik.topjava.service;
 import com.tsyrulik.topjava.model.Role;
 import com.tsyrulik.topjava.model.User;
 import com.tsyrulik.topjava.repository.UserRepository;
-import com.tsyrulik.topjava.util.exception.NotFoundException;
+import com.tsyrulik.topjava.util.exception.NotFoundExceptionCustom;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +50,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Test
     void deletedNotFound() throws Exception {
-        assertThrows(NotFoundException.class, () -> service.delete(1));
+        assertThrows(NotFoundExceptionCustom.class, () -> service.delete(1));
     }
 
     @Test
@@ -61,7 +61,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Test
     void getNotFound() throws Exception {
-        assertThrows(NotFoundException.class, () -> service.get(1));
+        assertThrows(NotFoundExceptionCustom.class, () -> service.get(1));
     }
 
     @Test

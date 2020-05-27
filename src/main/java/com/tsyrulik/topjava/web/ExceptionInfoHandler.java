@@ -4,7 +4,7 @@ import com.tsyrulik.topjava.util.ValidationUtil;
 import com.tsyrulik.topjava.util.exception.ErrorInfo;
 import com.tsyrulik.topjava.util.exception.ErrorType;
 import com.tsyrulik.topjava.util.exception.IllegalRequestDataException;
-import com.tsyrulik.topjava.util.exception.NotFoundException;
+import com.tsyrulik.topjava.util.exception.NotFoundExceptionCustom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
@@ -29,8 +29,8 @@ public class ExceptionInfoHandler {
 
     //  http://stackoverflow.com/a/22358422/548473
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
-    @ExceptionHandler(NotFoundException.class)
-    public ErrorInfo handleError(HttpServletRequest req, NotFoundException e) {
+    @ExceptionHandler(NotFoundExceptionCustom.class)
+    public ErrorInfo handleError(HttpServletRequest req, NotFoundExceptionCustom e) {
         return logAndGetErrorInfo(req, e, false, DATA_NOT_FOUND);
     }
 

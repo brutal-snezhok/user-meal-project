@@ -1,7 +1,7 @@
 package com.tsyrulik.topjava.web.user;
 
 import com.tsyrulik.topjava.repository.inmemory.InMemoryUserRepository;
-import com.tsyrulik.topjava.util.exception.NotFoundException;
+import com.tsyrulik.topjava.util.exception.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +32,6 @@ class InMemoryAdminRestControllerSpringTest {
 
     @Test
     void deleteNotFound() throws Exception {
-        Assertions.assertThrows(NotFoundException.class, () -> controller.delete(10));
+        Assertions.assertThrows(NotFoundExceptionCustom.class, () -> controller.delete(10));
     }
 }
